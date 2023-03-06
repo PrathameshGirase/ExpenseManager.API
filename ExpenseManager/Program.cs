@@ -35,6 +35,7 @@ builder.Services.AddAutoMapper(typeof(MapperConfig));
 builder.Services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>));
 builder.Services.AddScoped<ICategoriesRepository, CategoryRepository>();
 builder.Services.AddScoped<ITransactionTypeRepository, TransactionTypeRepository>();
+builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 
 var app = builder.Build();
 

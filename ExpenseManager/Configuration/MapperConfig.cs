@@ -15,6 +15,7 @@ namespace ExpenseManager.Configuration
             CreateMap<Category, CategoryDto>().ReverseMap();
             CreateMap<Category, UpdateCategoryDto>().ReverseMap();
             CreateMap<Transaction, TransactionDto>().ReverseMap();
+            CreateMap<Transaction, CreateTransactionDto>().ReverseMap();
             CreateMap<TransactionType, GetTransactionTypeDto>().ReverseMap();
             CreateMap<TransactionType, TransactionTypeDto>().ReverseMap();
         }
