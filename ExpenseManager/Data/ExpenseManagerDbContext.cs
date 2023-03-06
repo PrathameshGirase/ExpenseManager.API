@@ -13,8 +13,8 @@ namespace ExpenseManager.Data
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Category> Categories { get; set; }
 
-        public DbSet<Transaction_Type> TransactionTypes { get; set; }
-        System.TimeSpan duration = new System.TimeSpan(30, 0, 0, 0);
+        public DbSet<TransactionType> TransactionTypes { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -46,19 +46,25 @@ namespace ExpenseManager.Data
                 new Category
                 {
                     Id = 5,
+                    Name = "Staff",
+
+                },
+                new Category
+                {
+                    Id = 6,
                     Name = "Others",
 
                 }
 
             );
 
-            modelBuilder.Entity<Transaction_Type>().HasData(
-                new Transaction_Type
+            modelBuilder.Entity<TransactionType>().HasData(
+                new TransactionType
                 {
                     Id = 1,
                     Name = "Expense"
                 },
-                new Transaction_Type
+                new TransactionType
                 {
                     Id = 2,
                     Name = "Income"
@@ -72,8 +78,8 @@ namespace ExpenseManager.Data
                     Amount = 50,
                     Name = "Starbucks",
                     Description = "My Treat",
-                    Date = DateTime.Now.Add(duration),
-                    Transaction_Type_Id= 1,
+                    Date = DateTime.Now,
+                    TransactionTypeId= 1,
                     CategoryId= 1,
 
                 },
@@ -83,10 +89,19 @@ namespace ExpenseManager.Data
                     Amount = 100,
                     Name = "Stocks",
                     Description = "Profit",
-                    Date = DateTime.Now.Add(duration),
-                    Transaction_Type_Id = 2,
+                    Date = DateTime.Now,
+                    TransactionTypeId = 2,
                     CategoryId = 5,
-
+                },
+                new Transaction
+                {
+                    Id = 5,
+                    Amount = 100,
+                    Name = "Salary",
+                    Description = "Null",
+                    Date = DateTime.Now,
+                    TransactionTypeId = 2,
+                    CategoryId = 5,
                 }
                 );
         }

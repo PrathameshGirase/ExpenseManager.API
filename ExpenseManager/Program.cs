@@ -1,4 +1,7 @@
+using ExpenseManager.Configuration;
+using ExpenseManager.Contracts;
 using ExpenseManager.Data;
+using ExpenseManager.Repository;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -27,6 +30,11 @@ builder.Services.AddCors(options =>
 });
     
 builder.Host.UseSerilog((ctx, lc)=>lc.WriteTo.Console().ReadFrom.Configuration(ctx.Configuration));
+
+builder.Services.AddAutoMapper(typeof(MapperConfig));
+builder.Services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>));
+builder.Services.AddScoped<ICategoriesRepository, CategoryRepository>();
+builder.Services.AddScoped<ITransactionTypeRepository, TransactionTypeRepository>();
 
 var app = builder.Build();
 

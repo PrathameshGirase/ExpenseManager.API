@@ -13,10 +13,10 @@ namespace ExpenseManager.Data
 
         public DateTime Date { get; set; }
 
-        [ForeignKey(nameof(Transaction_Type_Id))]
-        public int Transaction_Type_Id { get; set; }
+        [ForeignKey(nameof(TransactionTypeId))]
+        public int TransactionTypeId { get; set; }
 
-        public Transaction_Type Transaction_Type { get; set; }
+        public TransactionType TransactionType { get; set; }
 
         
         [ForeignKey(nameof(CategoryId))]

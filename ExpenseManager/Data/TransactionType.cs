@@ -1,6 +1,6 @@
 ﻿namespace ExpenseManager.Data
 {
-    public class Transaction_Type
+    public class TransactionType
     {
 
         public int Id { get; set; }

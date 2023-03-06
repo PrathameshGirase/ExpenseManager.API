@@ -61,6 +61,11 @@ namespace ExpenseManager.Migrations
                         new
                         {
                             Id = 5,
+                            Name = "Staff"
+                        },
+                        new
+                        {
+                            Id = 6,
                             Name = "Others"
                         });
                 });
@@ -88,17 +93,14 @@ namespace ExpenseManager.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Transaction_TypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Transaction_Type_Id")
+                    b.Property<int>("TransactionTypeId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("Transaction_TypeId");
+                    b.HasIndex("TransactionTypeId");
 
                     b.ToTable("Transactions");
 
@@ -108,24 +110,34 @@ namespace ExpenseManager.Migrations
                             Id = 1,
                             Amount = 50.0,
                             CategoryId = 1,
-                            Date = new DateTime(2023, 4, 4, 17, 14, 57, 832, DateTimeKind.Local).AddTicks(6540),
+                            Date = new DateTime(2023, 3, 5, 23, 48, 44, 956, DateTimeKind.Local).AddTicks(4277),
                             Description = "My Treat",
                             Name = "Starbucks",
-                            Transaction_Type_Id = 1
+                            TransactionTypeId = 1
                         },
                         new
                         {
                             Id = 2,
                             Amount = 100.0,
                             CategoryId = 5,
-                            Date = new DateTime(2023, 4, 4, 17, 14, 57, 832, DateTimeKind.Local).AddTicks(6555),
+                            Date = new DateTime(2023, 3, 5, 23, 48, 44, 956, DateTimeKind.Local).AddTicks(4286),
                             Description = "Profit",
                             Name = "Stocks",
-                            Transaction_Type_Id = 2
+                            TransactionTypeId = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Amount = 100.0,
+                            CategoryId = 5,
+                            Date = new DateTime(2023, 3, 5, 23, 48, 44, 956, DateTimeKind.Local).AddTicks(4288),
+                            Description = "Null",
+                            Name = "Salary",
+                            TransactionTypeId = 2
                         });
                 });
 
-            modelBuilder.Entity("ExpenseManager.Data.Transaction_Type", b =>
+            modelBuilder.Entity("ExpenseManager.Data.TransactionType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -161,13 +173,15 @@ namespace ExpenseManager.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ExpenseManager.Data.Transaction_Type", "Transaction_Type")
+                    b.HasOne("ExpenseManager.Data.TransactionType", "TransactionType")
                         .WithMany("Transactions")
-                        .HasForeignKey("Transaction_TypeId");
+                        .HasForeignKey("TransactionTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Category");
 
-                    b.Navigation("Transaction_Type");
+                    b.Navigation("TransactionType");
                 });
 
             modelBuilder.Entity("ExpenseManager.Data.Category", b =>
@@ -175,7 +189,7 @@ namespace ExpenseManager.Migrations
                     b.Navigation("Transactions");
                 });
 
-            modelBuilder.Entity("ExpenseManager.Data.Transaction_Type", b =>
+            modelBuilder.Entity("ExpenseManager.Data.TransactionType", b =>
                 {
                     b.Navigation("Transactions");
                 });
