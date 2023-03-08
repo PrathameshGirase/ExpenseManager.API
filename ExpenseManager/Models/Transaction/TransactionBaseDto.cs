@@ -15,6 +15,7 @@ namespace ExpenseManager.Models.Transaction
         public double Amount { get; set; }
 
         [Microsoft.Build.Framework.Required]
+        [DataType(DataType.DateTime)]
         public DateTime Date { get; set; }
 
         [Microsoft.Build.Framework.Required]

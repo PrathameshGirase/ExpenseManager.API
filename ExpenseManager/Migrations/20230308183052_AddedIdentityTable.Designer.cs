@@ -4,6 +4,7 @@ using ExpenseManager.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExpenseManager.Migrations
 {
     [DbContext(typeof(ExpenseManagerDbContext))]
-    partial class ExpenseManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230308183052_AddedIdentityTable")]
+    partial class AddedIdentityTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -181,7 +184,7 @@ namespace ExpenseManager.Migrations
                             Id = 1,
                             Amount = 50.0,
                             CategoryId = 1,
-                            Date = new DateTime(2023, 3, 9, 0, 19, 44, 263, DateTimeKind.Local).AddTicks(7526),
+                            Date = new DateTime(2023, 3, 9, 0, 0, 52, 723, DateTimeKind.Local).AddTicks(4405),
                             Description = "My Treat",
                             Name = "Starbucks",
                             TransactionTypeId = 1
@@ -191,7 +194,7 @@ namespace ExpenseManager.Migrations
                             Id = 2,
                             Amount = 100.0,
                             CategoryId = 5,
-                            Date = new DateTime(2023, 3, 9, 0, 19, 44, 263, DateTimeKind.Local).AddTicks(7538),
+                            Date = new DateTime(2023, 3, 9, 0, 0, 52, 723, DateTimeKind.Local).AddTicks(4417),
                             Description = "Profit",
                             Name = "Stocks",
                             TransactionTypeId = 2
@@ -201,7 +204,7 @@ namespace ExpenseManager.Migrations
                             Id = 5,
                             Amount = 100.0,
                             CategoryId = 5,
-                            Date = new DateTime(2023, 3, 9, 0, 19, 44, 263, DateTimeKind.Local).AddTicks(7539),
+                            Date = new DateTime(2023, 3, 9, 0, 0, 52, 723, DateTimeKind.Local).AddTicks(4471),
                             Description = "Null",
                             Name = "Salary",
                             TransactionTypeId = 2
@@ -261,20 +264,6 @@ namespace ExpenseManager.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "3871cc4d-c2c0-4ac6-a6f5-326596dd7a29",
-                            Name = "Administrator",
-                            NormalizedName = "ADMINISTRATOR"
-                        },
-                        new
-                        {
-                            Id = "27574cde-715f-4940-bd4d-20599cc1f7d6",
-                            Name = "User",
-                            NormalizedName = "USER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

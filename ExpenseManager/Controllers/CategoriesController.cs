@@ -9,11 +9,13 @@ using ExpenseManager.Data;
 using ExpenseManager.Models.Category;
 using AutoMapper;
 using ExpenseManager.Contracts;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ExpenseManager.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CategoriesController : ControllerBase
     {
         

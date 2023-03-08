@@ -3,6 +3,7 @@ using ExpenseManager.Data;
 using ExpenseManager.Models.Category;
 using ExpenseManager.Models.Transaction;
 using ExpenseManager.Models.Transaction_Type;
+using ExpenseManager.Models.Users;
 
 namespace ExpenseManager.Configuration
 {
@@ -18,6 +19,7 @@ namespace ExpenseManager.Configuration
             CreateMap<Transaction, CreateTransactionDto>().ReverseMap();
             CreateMap<TransactionType, GetTransactionTypeDto>().ReverseMap();
             CreateMap<TransactionType, TransactionTypeDto>().ReverseMap();
+            CreateMap<ApiUserDto, ApiUser>().ReverseMap();
         }
     }
 }
