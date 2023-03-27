@@ -11,7 +11,7 @@ namespace ExpenseManager.Data
 
         public double Amount { get; set; }
 
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
 
         [ForeignKey(nameof(TransactionTypeId))]
         public int TransactionTypeId { get; set; }

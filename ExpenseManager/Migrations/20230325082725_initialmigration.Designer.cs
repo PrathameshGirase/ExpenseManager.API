@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExpenseManager.Migrations
 {
     [DbContext(typeof(ExpenseManagerDbContext))]
-    [Migration("20230308183052_AddedIdentityTable")]
-    partial class AddedIdentityTable
+    [Migration("20230325082725_initialmigration")]
+    partial class initialmigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -158,8 +158,8 @@ namespace ExpenseManager.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Date")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -184,7 +184,7 @@ namespace ExpenseManager.Migrations
                             Id = 1,
                             Amount = 50.0,
                             CategoryId = 1,
-                            Date = new DateTime(2023, 3, 9, 0, 0, 52, 723, DateTimeKind.Local).AddTicks(4405),
+                            Date = "25-03-2023 13:57:25",
                             Description = "My Treat",
                             Name = "Starbucks",
                             TransactionTypeId = 1
@@ -194,7 +194,7 @@ namespace ExpenseManager.Migrations
                             Id = 2,
                             Amount = 100.0,
                             CategoryId = 5,
-                            Date = new DateTime(2023, 3, 9, 0, 0, 52, 723, DateTimeKind.Local).AddTicks(4417),
+                            Date = "25-03-2023 13:57:25",
                             Description = "Profit",
                             Name = "Stocks",
                             TransactionTypeId = 2
@@ -204,7 +204,7 @@ namespace ExpenseManager.Migrations
                             Id = 5,
                             Amount = 100.0,
                             CategoryId = 5,
-                            Date = new DateTime(2023, 3, 9, 0, 0, 52, 723, DateTimeKind.Local).AddTicks(4471),
+                            Date = "25-03-2023 13:57:25",
                             Description = "Null",
                             Name = "Salary",
                             TransactionTypeId = 2
@@ -264,6 +264,20 @@ namespace ExpenseManager.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "4b478765-d2d8-4403-ac13-d5649dc4d68b",
+                            Name = "Administrator",
+                            NormalizedName = "ADMINISTRATOR"
+                        },
+                        new
+                        {
+                            Id = "8718dae5-6062-43de-98a9-dc8d9aafb224",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

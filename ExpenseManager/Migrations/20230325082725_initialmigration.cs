@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace ExpenseManager.Migrations
 {
     /// <inheritdoc />
-    public partial class AddedIdentityTable : Migration
+    public partial class initialmigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -50,6 +52,32 @@ namespace ExpenseManager.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TransactionTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TransactionTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -158,26 +186,76 @@ namespace ExpenseManager.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.UpdateData(
-                table: "Transactions",
-                keyColumn: "Id",
-                keyValue: 1,
-                column: "Date",
-                value: new DateTime(2023, 3, 9, 0, 0, 52, 723, DateTimeKind.Local).AddTicks(4405));
+            migrationBuilder.CreateTable(
+                name: "Transactions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Amount = table.Column<double>(type: "float", nullable: false),
+                    Date = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TransactionTypeId = table.Column<int>(type: "int", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Transactions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Transactions_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Transactions_TransactionTypes_TransactionTypeId",
+                        column: x => x.TransactionTypeId,
+                        principalTable: "TransactionTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
-            migrationBuilder.UpdateData(
-                table: "Transactions",
-                keyColumn: "Id",
-                keyValue: 2,
-                column: "Date",
-                value: new DateTime(2023, 3, 9, 0, 0, 52, 723, DateTimeKind.Local).AddTicks(4417));
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "4b478765-d2d8-4403-ac13-d5649dc4d68b", null, "Administrator", "ADMINISTRATOR" },
+                    { "8718dae5-6062-43de-98a9-dc8d9aafb224", null, "User", "USER" }
+                });
 
-            migrationBuilder.UpdateData(
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Food And Beverages" },
+                    { 2, "Pantry" },
+                    { 3, "Stationary" },
+                    { 4, "Travel" },
+                    { 5, "Staff" },
+                    { 6, "Others" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "TransactionTypes",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Expense" },
+                    { 2, "Income" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Transactions",
-                keyColumn: "Id",
-                keyValue: 5,
-                column: "Date",
-                value: new DateTime(2023, 3, 9, 0, 0, 52, 723, DateTimeKind.Local).AddTicks(4471));
+                columns: new[] { "Id", "Amount", "CategoryId", "Date", "Description", "Name", "TransactionTypeId" },
+                values: new object[,]
+                {
+                    { 1, 50.0, 1, "25-03-2023 13:57:25", "My Treat", "Starbucks", 1 },
+                    { 2, 100.0, 5, "25-03-2023 13:57:25", "Profit", "Stocks", 2 },
+                    { 5, 100.0, 5, "25-03-2023 13:57:25", "Null", "Salary", 2 }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -217,6 +295,16 @@ namespace ExpenseManager.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transactions_CategoryId",
+                table: "Transactions",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transactions_TransactionTypeId",
+                table: "Transactions",
+                column: "TransactionTypeId");
         }
 
         /// <inheritdoc />
@@ -238,31 +326,19 @@ namespace ExpenseManager.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Transactions");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
-            migrationBuilder.UpdateData(
-                table: "Transactions",
-                keyColumn: "Id",
-                keyValue: 1,
-                column: "Date",
-                value: new DateTime(2023, 3, 5, 23, 48, 44, 956, DateTimeKind.Local).AddTicks(4277));
+            migrationBuilder.DropTable(
+                name: "Categories");
 
-            migrationBuilder.UpdateData(
-                table: "Transactions",
-                keyColumn: "Id",
-                keyValue: 2,
-                column: "Date",
-                value: new DateTime(2023, 3, 5, 23, 48, 44, 956, DateTimeKind.Local).AddTicks(4286));
-
-            migrationBuilder.UpdateData(
-                table: "Transactions",
-                keyColumn: "Id",
-                keyValue: 5,
-                column: "Date",
-                value: new DateTime(2023, 3, 5, 23, 48, 44, 956, DateTimeKind.Local).AddTicks(4288));
+            migrationBuilder.DropTable(
+                name: "TransactionTypes");
         }
     }
 }

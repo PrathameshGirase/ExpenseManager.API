@@ -155,8 +155,8 @@ namespace ExpenseManager.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Date")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -181,7 +181,7 @@ namespace ExpenseManager.Migrations
                             Id = 1,
                             Amount = 50.0,
                             CategoryId = 1,
-                            Date = new DateTime(2023, 3, 9, 0, 19, 44, 263, DateTimeKind.Local).AddTicks(7526),
+                            Date = "25-03-2023 13:57:25",
                             Description = "My Treat",
                             Name = "Starbucks",
                             TransactionTypeId = 1
@@ -191,7 +191,7 @@ namespace ExpenseManager.Migrations
                             Id = 2,
                             Amount = 100.0,
                             CategoryId = 5,
-                            Date = new DateTime(2023, 3, 9, 0, 19, 44, 263, DateTimeKind.Local).AddTicks(7538),
+                            Date = "25-03-2023 13:57:25",
                             Description = "Profit",
                             Name = "Stocks",
                             TransactionTypeId = 2
@@ -201,7 +201,7 @@ namespace ExpenseManager.Migrations
                             Id = 5,
                             Amount = 100.0,
                             CategoryId = 5,
-                            Date = new DateTime(2023, 3, 9, 0, 19, 44, 263, DateTimeKind.Local).AddTicks(7539),
+                            Date = "25-03-2023 13:57:25",
                             Description = "Null",
                             Name = "Salary",
                             TransactionTypeId = 2
@@ -265,13 +265,13 @@ namespace ExpenseManager.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3871cc4d-c2c0-4ac6-a6f5-326596dd7a29",
+                            Id = "4b478765-d2d8-4403-ac13-d5649dc4d68b",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "27574cde-715f-4940-bd4d-20599cc1f7d6",
+                            Id = "8718dae5-6062-43de-98a9-dc8d9aafb224",
                             Name = "User",
                             NormalizedName = "USER"
                         });

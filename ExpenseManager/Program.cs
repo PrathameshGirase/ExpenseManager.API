@@ -1,15 +1,23 @@
+using ExpenseManager;
 using ExpenseManager.Configuration;
 using ExpenseManager.Contracts;
 using ExpenseManager.Data;
 using ExpenseManager.Repository;
+using Hangfire;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+
+
 
 // Add services to the container.
 
@@ -47,6 +55,18 @@ builder.Services.AddScoped<ITransactionTypeRepository, TransactionTypeRepository
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 builder.Services.AddScoped<IAuthManager, AuthManager>();
 
+builder.Services.AddHangfire(x => x.UseSqlServerStorage(connectionString));
+builder.Services.AddHangfireServer();
+
+
+
+
+
+
+/*Mail*/
+
+
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme; //"Bearer
@@ -68,12 +88,31 @@ builder.Services.AddAuthentication(options =>
 
 var app = builder.Build();
 
+    
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    
 }
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
+
+app.UseHangfireDashboard("/hangfire", new
+DashboardOptions
+{
+    Authorization = new[] { new ExpenseManager.MyAuthorizationFilter() }
+});
+app.UseHangfireDashboard("/hangfire", new DashboardOptions
+{
+    DashboardTitle = "Sample Jobs",
+    Authorization = new[]
+            {
+                new  MyAuthorizationFilter("admin")
+            }
+});
 
 app.UseHttpsRedirection();
 
@@ -85,3 +124,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+

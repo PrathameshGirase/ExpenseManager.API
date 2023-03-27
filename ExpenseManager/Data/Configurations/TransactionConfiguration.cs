@@ -15,7 +15,7 @@ namespace ExpenseManager.Data.Configurations
                     Amount = 50,
                     Name = "Starbucks",
                     Description = "My Treat",
-                    Date = DateTime.Now,
+                    Date = DateTime.Now.ToString(),
                     TransactionTypeId = 1,
                     CategoryId = 1,
 
@@ -26,7 +26,7 @@ namespace ExpenseManager.Data.Configurations
                     Amount = 100,
                     Name = "Stocks",
                     Description = "Profit",
-                    Date = DateTime.Now,
+                    Date = DateTime.Now.ToString(),
                     TransactionTypeId = 2,
                     CategoryId = 5,
                 },
@@ -36,7 +36,7 @@ namespace ExpenseManager.Data.Configurations
                     Amount = 100,
                     Name = "Salary",
                     Description = "Null",
-                    Date = DateTime.Now,
+                    Date = DateTime.Now.ToString(),
                     TransactionTypeId = 2,
                     CategoryId = 5,
                 }
